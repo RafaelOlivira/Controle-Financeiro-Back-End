@@ -6,6 +6,7 @@ import com.rafaklivdev.financeiro.model.Transaction;
 import com.rafaklivdev.financeiro.model.TransactionType;
 import com.rafaklivdev.financeiro.service.TransactionService;
 import jakarta.validation.Valid;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -44,6 +45,34 @@ public class TransactionController {
     @GetMapping("/type/{type}")
     public List<Transaction> findByType(@PathVariable TransactionType type){
         return transactionService.findByType(type);
+    }
+
+    @GetMapping("/date")
+    public List<Transaction> findByMonthAndYear(@RequestParam int month, @RequestParam int year){
+        return transactionService.findByMonthAndYear(month,year);
+    }
+
+    @GetMapping("/search")
+    public List<Transaction> findByTypeAndMonthAndYear(@RequestParam TransactionType type,
+                                                       @RequestParam int month,
+                                                       @RequestParam int year){
+        return transactionService.findByTypeAndMonthAndYear(type,month,year);
+    }
+
+    @GetMapping("/search/description") // Ao digitar a descrição irá buscar no banco
+    public List<Transaction> findBySearchDescription(@RequestParam TransactionType type,
+                                                     @RequestParam int month,
+                                                     @RequestParam int year,
+                                                     @RequestParam String description){
+        return transactionService.findBySearch(type,month,year,description);
+    }
+
+    @GetMapping("/search/description/all")
+    public List<Transaction> findBySearchDescriptionAll(@RequestParam int month,
+                                                        @RequestParam int year,
+                                                        @RequestParam String description){
+        return transactionService.findBySearchAll(month,year,description);
+
     }
 
     @DeleteMapping("/{id}")

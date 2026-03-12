@@ -59,4 +59,18 @@ public class TransactionService {
     public List<Transaction> findByType(TransactionType type){ // Buscar pelo Tipo
         return transactionRepository.findByType(type);
     }
+
+    public List<Transaction> findByTypeAndMonthAndYear(TransactionType type, int month,int year){
+        return transactionRepository.findByTypeAndMonthAndYear(type,month,year);
+    }
+
+    public List<Transaction> findByMonthAndYear(int month,int year){ // Busca personalizada por mês e ano
+        return transactionRepository.findByMonthAndYear(month,year);
+    }
+    public List<Transaction> findBySearch(TransactionType type, int month, int year, String description){
+        return transactionRepository.findBySearch(type,month,year,description);
+    }
+    public List<Transaction> findBySearchAll(int month, int year,String description){
+        return transactionRepository.findBySearchAllType(month,year,description);
+    }
 }
